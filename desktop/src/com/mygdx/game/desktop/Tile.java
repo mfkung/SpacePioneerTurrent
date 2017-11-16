@@ -16,6 +16,7 @@ public class Tile {
 		this.width = width;
 		this.height = height;
 		this.texture = QuickLoad(type.textureName);
+		this.type = type;
 	}
 	
 	public void Draw() {

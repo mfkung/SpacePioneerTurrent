@@ -1,14 +1,29 @@
 package com.mygdx.game.desktop;
 
-import com.badlogic.gdx.backends.lwjgl.LwjglApplication;
-import com.badlogic.gdx.backends.lwjgl.LwjglApplicationConfiguration;
+import static org.lwjgl.opengl.GL11.*;
+import org.lwjgl.LWJGLException;
+import org.lwjgl.opengl.Display;
+import org.lwjgl.opengl.DisplayMode;
+
+import static helpers.Art.*;
+
 import com.mygdx.game.SPTGame;
 
 public class DesktopLauncher {
+	public static final int WIDTH = 1240, HEIGHT = 860;
+	public DesktopLauncher() {
+		Begin();
+
+		
+		while(!Display.isCloseRequested()) {
+
+			DrawQuad(50,50,100,100);
+			Display.update();
+			Display.sync(60);
+		}
+	}
+
 	public static void main (String[] arg) {
-		LwjglApplicationConfiguration config = new LwjglApplicationConfiguration();
-		config.width = 1540;
-        config.height = 960;
-		new LwjglApplication(new SPTGame(), config);
+		new DesktopLauncher();
 	}
 }

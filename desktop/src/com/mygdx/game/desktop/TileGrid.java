@@ -1,47 +1,79 @@
 package com.mygdx.game.desktop;
+
+
 import static helpers.Art.*;
+
 public class TileGrid {
-	
+
 	public Tile[][] map;
+	private int tilesWide, tilesHigh;
 	
 	public TileGrid() {
-		map = new Tile[12][8];
+		map = new Tile[20][15];
 		for (int i = 0; i < map.length; i++) {
 			for (int j = 0; j < map[i].length; j++) {
-				map[i][j] = new Tile(i * 160, j * 160, 160, 160, TileType.Ground);
-				
+				map[i][j] = new Tile(i * 64, j * 64, 64, 64, TileType.createablefield);
 			}
 		}
 	}
+	
 	public TileGrid(int[][] newMap) {
-		map = new Tile[12][8];
+		this.tilesWide = newMap[0].length;
+		this.tilesHigh = newMap.length;
+		map = new Tile[tilesWide][tilesHigh];
 		for (int i = 0; i < map.length; i++) {
-			for (int j = 0; j < map[i].length; j++) {	
-				if (newMap[j][i] == 1)
-					map[i][j] = new Tile(i * 160, j * 160, 160, 160, TileType.Ground);
-				else if (newMap[j][i] == 2)
-					map[i][j] = new Tile(i * 160, j * 160, 160, 160, TileType.Ground2);
-				else if (newMap[j][i] == 3)
-					map[i][j] = new Tile(i * 160, j * 160, 160, 160, TileType.Ground3);
-				else if (newMap[j][i] == 4)
-					map[i][j] = new Tile(i * 160, j * 160, 160, 160, TileType.Ground4);
-				else if (newMap[j][i] == 5)
-					map[i][j] = new Tile(i * 160, j * 160, 160, 160, TileType.GroundM);
+			for (int j = 0; j < map[i].length; j++) {
+				switch (newMap[j][i]) {
+				case 0:
+					map[i][j] = new Tile(i * 64, j * 64, 64, 64, TileType.createablefield);
+					break;
+				case 1:
+					map[i][j] = new Tile(i * 64, j * 64, 64, 64, TileType.enemyfield);
+					break;
+				case 2:
+					map[i][j] = new Tile(i * 64, j * 64, 64, 64, TileType.starfield);
+					break;
+				}
 			}
 		}
 	}
+	
 	public void SetTile(int xCoord, int yCoord, TileType type) {
-		map[xCoord][yCoord] = new Tile(xCoord * 160, yCoord * 160, 160, 160, type);
+		map[xCoord][yCoord] = new Tile(xCoord * 64, yCoord * 64, 64, 64, type);
 	}
-	public Tile GetTile(int xCoord, int yCoord) {
-		return map[xCoord][yCoord];
+	
+	public Tile GetTile(int xPlace, int yPlace) {
+		if (xPlace < tilesWide && yPlace < tilesHigh && xPlace > -1 && yPlace > -1)
+			return map[xPlace][yPlace];
+		else
+			return new Tile(0, 0, 0, 0, TileType.NULL);
 	}
+
+	
 	public void Draw() {
 		for (int i = 0; i < map.length; i++) {
 			for (int j = 0; j < map[i].length; j++) {
-				Tile t = map[i][j];
-				DrawQuadTex(t.getTexture(), t.getX(), t.getY(), t.getWidth(), t.getHeight());
+				map[i][j].Draw();
 			}
 		}
 	}
+
+	public int getTilesWide() {
+		return tilesWide;
+	}
+
+	public void setTilesWide(int tilesWide) {
+		this.tilesWide = tilesWide;
+	}
+
+	public int getTilesHigh() {
+		return tilesHigh;
+	}
+
+	public void setTilesHigh(int tilesHigh) {
+		this.tilesHigh = tilesHigh;
+	}
+	
+	
 }
+

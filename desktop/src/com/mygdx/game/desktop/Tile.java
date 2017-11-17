@@ -1,29 +1,38 @@
 package com.mygdx.game.desktop;
 
+import org.newdawn.slick.opengl.Texture;
 
 import static helpers.Art.*;
 
-import org.newdawn.slick.opengl.Texture;
-
 public class Tile {
+
 	private float x, y, width, height;
 	private Texture texture;
 	private TileType type;
 	
-	public Tile(float x,float y, float width, float height, TileType type) {
+	public Tile(float x, float y, float width, float height, TileType type) {
 		this.x = x;
 		this.y = y;
 		this.width = width;
 		this.height = height;
-		this.texture = QuickLoad(type.textureName);
 		this.type = type;
+		this.texture = QuickLoad(type.textureName);
 	}
 	
 	public void Draw() {
 		DrawQuadTex(texture, x, y, width, height);
 	}
+
 	public float getX() {
 		return x;
+	}
+	
+	public int getXPlace() {
+		return (int) x / 64;
+	}
+	
+	public int getYPlace() {
+		return (int) y / 64;
 	}
 
 	public void setX(float x) {
@@ -69,4 +78,9 @@ public class Tile {
 	public void setType(TileType type) {
 		this.type = type;
 	}
+	
+	
+	
 }
+
+

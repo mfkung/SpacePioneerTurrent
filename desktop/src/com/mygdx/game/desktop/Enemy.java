@@ -1,13 +1,11 @@
 package com.mygdx.game.desktop;
 
-import java.util.ArrayList;
-
 import org.newdawn.slick.opengl.Texture;
 
 import static helpers.Art.*;
 import static helpers.Clock.*;
 
-public class Enemy {
+public class Enemy implements Entity {
 	private int width, height, health;
 	private float speed, x, y;
 	private Texture texture;
@@ -17,7 +15,7 @@ public class Enemy {
 	
 
 	public Enemy(Texture texture, Tile startTile, TileGrid grid, int width,
-			int height, float speed) {
+			int height, float speed, int health) {
 		this.texture = texture;
 		this.startTile = startTile;
 		this.x = startTile.getX();
@@ -25,12 +23,11 @@ public class Enemy {
 		this.width = width;
 		this.height = height;
 		this.speed = speed;
+		this.health = health;
 		this.grid = grid;
-		
-
 	}
 
-	public void Update() {
+	public void update() {
 		if (first)
 			first = false;
 		else {
@@ -40,13 +37,17 @@ public class Enemy {
 	
 	}
 	
-	
+	public void damage(int amount) {
+		health -= amount;
+		if (health <= 0)
+			Die();
+	}
 
 	private void Die() {
 		alive = false;
 	}
 
-	public void Draw() {
+	public void draw() {
 		DrawQuadTex(texture, x, y, width, height);
 	}
 

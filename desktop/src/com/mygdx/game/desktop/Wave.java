@@ -1,13 +1,14 @@
 package com.mygdx.game.desktop;
 
-import java.util.ArrayList;
+import java.util.concurrent.CopyOnWriteArrayList;
+
 import static helpers.Clock.*;
 
 public class Wave {
 
 	private float timeSinceLastSpawn, spawnTime;
 	private Enemy enemyType;
-	private ArrayList<Enemy> enemyList;
+	private CopyOnWriteArrayList<Enemy> enemyList;
 	private int enemiesPerWave;
 	private boolean waveCompleted;
 
@@ -16,7 +17,7 @@ public class Wave {
 		this.spawnTime = spawnTime;
 		this.enemiesPerWave = enemiesPerWave;
 		this.timeSinceLastSpawn = 0;
-		this.enemyList = new ArrayList<Enemy>();
+		this.enemyList = new CopyOnWriteArrayList<Enemy>();
 		this.waveCompleted = false;
 		
 		Spawn();
@@ -34,9 +35,10 @@ public class Wave {
 		for (Enemy e : enemyList) {
 			if (e.isAlive()) {
 				allEnemiesDead = false;
-				e.Update();
-				e.Draw();
-			}
+				e.update();
+				e.draw();
+			}else
+				enemyList.remove(e);
 		}
 		if (allEnemiesDead)
 			waveCompleted = true;
@@ -45,7 +47,7 @@ public class Wave {
 	private void Spawn() {
 		enemyList.add(new Enemy(enemyType.getTexture(), enemyType
 				.getStartTile(), enemyType.getTileGrid(), 64, 64, enemyType
-				.getSpeed()));
+				.getSpeed(), enemyType.getHealth()));
 
 	}
 	
@@ -53,7 +55,7 @@ public class Wave {
 		return waveCompleted;
 	}
 	
-	public ArrayList<Enemy> getEnemyList() {
+	public CopyOnWriteArrayList<Enemy> getEnemyList() {
 		return enemyList;
 	}
 }

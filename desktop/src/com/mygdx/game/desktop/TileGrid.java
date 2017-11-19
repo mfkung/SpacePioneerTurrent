@@ -1,8 +1,6 @@
 package com.mygdx.game.desktop;
 
 
-import static helpers.Art.*;
-
 public class TileGrid {
 
 	public Tile[][] map;

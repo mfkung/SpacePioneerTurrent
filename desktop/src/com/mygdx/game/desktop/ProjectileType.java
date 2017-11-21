@@ -6,8 +6,8 @@ import org.newdawn.slick.opengl.Texture;
 
 public enum ProjectileType {
 	
-	Normal(QuickLoad("laser"), 10 , 500),
-	Slow(QuickLoad("laserSlow"), 3 , 500);
+	Normal(QuickLoad("laser"), 5 , 500),
+	Slow(QuickLoad("laserSlow"), 2 , 500);
 	
 	Texture texture;
 	int damage;

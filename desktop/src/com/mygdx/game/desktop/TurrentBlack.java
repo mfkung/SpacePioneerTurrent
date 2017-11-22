@@ -1,11 +1,16 @@
 package com.mygdx.game.desktop;
 
-import org.newdawn.slick.opengl.Texture;
+import java.util.concurrent.CopyOnWriteArrayList;
 
 public class TurrentBlack extends Tower{
 	
-	public TurrentBlack(Texture texture, float x, float y, int width, int height) {
-		super(texture, x, y, width, height);
+	public TurrentBlack(TowerType type, Tile startTile, CopyOnWriteArrayList<Enemy> enemies) {
+		super(type, startTile, enemies);
 	}
 	
+	@Override
+	public void shoot(Enemy target) {
+		super.projectiles.add(new ProjectileNormal(super.type.projectileType, super.target, super.getX() + 32, super.getY() + 32, 21,6));
+		super.target.reduceHiddenHealth(super.type.projectileType.damage);
+	}
 }

@@ -8,4 +8,9 @@ public class TurrentSlow extends Tower {
 		super(type, startTile, enemies);
 	}
 	
+	@Override
+	public void shoot(Enemy target) {
+		super.projectiles.add(new ProjectileSlow(super.type.projectileType, super.target, super.getX() + 32, super.getY() + 32, 21,6));
+		super.target.reduceHiddenHealth(super.type.projectileType.damage);
+	}
 }

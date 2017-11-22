@@ -4,31 +4,34 @@ import java.util.concurrent.CopyOnWriteArrayList;
 
 import static helpers.Clock.*;
 
+
 public class Wave {
 
 	private float timeSinceLastSpawn, spawnTime;
-	private Enemy enemyType;
+	private Enemy[] enemyTypes;
 	private CopyOnWriteArrayList<Enemy> enemyList;
-	private int enemiesPerWave;
+	private int enemiesPerWave, enemiesSpawned;
 	private boolean waveCompleted;
 
-	public Wave(Enemy enemyType, float spawnTime, int enemiesPerWave) {
-		this.enemyType = enemyType;
+	public Wave(Enemy[] enemyTypes, float spawnTime, int enemiesPerWave) {
+		this.enemyTypes = enemyTypes;
 		this.spawnTime = spawnTime;
 		this.enemiesPerWave = enemiesPerWave;
+		this.enemiesSpawned = 0;
 		this.timeSinceLastSpawn = 0;
 		this.enemyList = new CopyOnWriteArrayList<Enemy>();
 		this.waveCompleted = false;
 		
-		Spawn();
+		spawn();
 	}
 
-	public void Update() {
+	public void update() {
+		//Assume all enemies are dead, until for loop proves otherwise
 		boolean allEnemiesDead = true;
-		if (enemyList.size() < enemiesPerWave) {
+		if (enemiesSpawned < enemiesPerWave) {
 			timeSinceLastSpawn += Delta();
 			if (timeSinceLastSpawn > spawnTime) {
-				Spawn();
+				spawn();
 				timeSinceLastSpawn = 0;
 			}
 		}
@@ -37,18 +40,18 @@ public class Wave {
 				allEnemiesDead = false;
 				e.update();
 				e.draw();
-			}else
+			} else
 				enemyList.remove(e);
 		}
 		if (allEnemiesDead)
 			waveCompleted = true;
 	}
 
-	private void Spawn() {
-		enemyList.add(new Enemy(enemyType.getTexture(), enemyType
-				.getStartTile(), enemyType.getTileGrid(), 64, 64, enemyType
-				.getSpeed(), enemyType.getHealth()));
-
+	private void spawn() {
+		enemyList.add(new Enemy(enemyTypes[0].getTexture(), enemyTypes[0]
+				.getStartTile(), enemyTypes[0].getTileGrid(), 64, 64, enemyTypes[0]
+				.getSpeed(), enemyTypes[0].getHealth()));
+		enemiesSpawned++;
 	}
 	
 	public boolean isCompleted() {
@@ -59,3 +62,4 @@ public class Wave {
 		return enemyList;
 	}
 }
+

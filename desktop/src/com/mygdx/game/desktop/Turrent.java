@@ -37,9 +37,9 @@ public class Turrent {
 
 	}
 	
-	private Enemy acquireTarget() {
+	public Enemy acquireTarget() {
 		Enemy closest = null;
-		float closestDistance = 10000;
+		float closestDistance = 2000;
 		for (Enemy e: enemies) {
 			if (isInRange(e) && findDistance(e) < closestDistance) {
 				closestDistance = findDistance(e);
@@ -53,21 +53,19 @@ public class Turrent {
 	
 	private boolean isInRange(Enemy e) {
 		float xDistance = Math.abs(e.getX() - x);
-		float yDistance = Math.abs(e.getY() - y);
-		if (xDistance < range && yDistance < range)
+		if (xDistance < range)
 			return true;
 		return false;
 	}
 	
 	private float findDistance(Enemy e) {
 		float xDistance = Math.abs(e.getX() - x);
-		float yDistance = Math.abs(e.getY() - y);
-		return xDistance + yDistance;
+		return xDistance;
 	}
 	
 	private void shoot() {
 		timeSinceLastShot = 0;
-		projectiles.add(new Projectile(QuickLoad("laser"), target, x + Game.TILE_SIZE / 2 , y + Game.TILE_SIZE / 2 , 21, 6, 900, 10));
+		//projectiles.add(new ProjectileSlow(QuickLoad("laserSlow"), target, x + Game.TILE_SIZE / 2 , y + Game.TILE_SIZE / 2 , 21, 6, 900, 10));
 	}
 	
 	public void updateEnemyList(CopyOnWriteArrayList<Enemy> newList){

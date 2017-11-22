@@ -4,9 +4,8 @@ import org.newdawn.slick.opengl.Texture;
 
 public class ProjectileSlow extends Projectile {
 
-	public ProjectileSlow(Texture texture, Enemy target, float x, float y, int width, int height, float speed,
-			int damage) {
-		super(texture, target, x, y, width, height, speed, damage);
+	public ProjectileSlow(ProjectileType type, Enemy target, float x, float y, int width, int height) {
+		super(type, target, x, y, width, height);
 	}
 	
 	@Override

@@ -1,14 +1,5 @@
 package helpers;
 
-import static org.lwjgl.opengl.GL11.GL_MODELVIEW;
-import static org.lwjgl.opengl.GL11.GL_PROJECTION;
-import static org.lwjgl.opengl.GL11.GL_QUADS;
-import static org.lwjgl.opengl.GL11.glBegin;
-import static org.lwjgl.opengl.GL11.glEnd;
-import static org.lwjgl.opengl.GL11.glLoadIdentity;
-import static org.lwjgl.opengl.GL11.glMatrixMode;
-import static org.lwjgl.opengl.GL11.glOrtho;
-import static org.lwjgl.opengl.GL11.glVertex2f;
 import static org.lwjgl.opengl.GL11.*;
 
 import java.io.IOException;
@@ -23,7 +14,7 @@ import org.newdawn.slick.util.ResourceLoader;
 
 public class Art {
 
-	public static final int WIDTH = 1280, HEIGHT = 1024;
+	public static final int WIDTH = 1280, HEIGHT = 960;
 	
 	public static void Begin() {
 		Display.setTitle("SPTGame");

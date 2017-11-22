@@ -10,17 +10,19 @@ import java.util.concurrent.CopyOnWriteArrayList;
 public abstract class Tower implements Entity {
 
 	private float x, y, timeSinceLastShot, firingSpeed;
-	private int width, height, damage, range;
-	private Enemy target;
+	private int width, height, range, cost;
+	public Enemy target;
 	private Texture[] textures;
 	private CopyOnWriteArrayList<Enemy> enemies;
 	private boolean targeted;
-	private ArrayList<Projectile> projectiles;
+	public ArrayList<Projectile> projectiles;
+	public TowerType type;
 	
 	public Tower(TowerType type, Tile startTile, CopyOnWriteArrayList<Enemy> enemies) {
+		this.type = type;
 		this.textures = type.textures;
-		this.damage = type.damage;
 		this.range = type.range;
+		this.cost = type.cost;
 		this.x = startTile.getX();
 		this.y = startTile.getY();
 		this.width = startTile.getWidth();
@@ -28,15 +30,15 @@ public abstract class Tower implements Entity {
 		this.enemies = enemies;
 		this.targeted = false;
 		this.timeSinceLastShot = 0f;
-		this.firingSpeed = type.firingSpeed;
 		this.projectiles = new ArrayList<Projectile>();
+		this.firingSpeed = type.firingSpeed;
 	}
 	
 	private Enemy acquireTarget() {
 		Enemy closest = null;
-		float closestDistance = 10000;
+		float closestDistance = 2000;
 		for (Enemy e: enemies) {
-			if (isInRange(e) && findDistance(e) < closestDistance) {
+			if (isInRange(e) && findDistance(e) < closestDistance && e.getHiddenHealth() > 0) {
 				closestDistance = findDistance(e);
 				closest = e;
 			}
@@ -48,38 +50,37 @@ public abstract class Tower implements Entity {
 	
 	private boolean isInRange(Enemy e) {
 		float xDistance = Math.abs(e.getX() - x);
-		float yDistance = Math.abs(e.getY() - y);
-		if (xDistance < range && yDistance < range)
+
+		if (xDistance < range)
 			return true;
 		return false;
 	}
 	
 	private float findDistance(Enemy e) {
 		float xDistance = Math.abs(e.getX() - x);
-		float yDistance = Math.abs(e.getY() - y);
-		return xDistance + yDistance;
+
+		return xDistance;
 	}
 	
-	private void shoot() {
-		timeSinceLastShot = 0;
-		projectiles.add(new Projectile(QuickLoad("laser"), target, x + Game.TILE_SIZE / 2 , y + Game.TILE_SIZE / 2 , 21, 6, 900, 10));
-	}
+	public abstract void shoot(Enemy target);
 	
 	public void updateEnemyList(CopyOnWriteArrayList<Enemy> newList){
 		enemies = newList;
 	}
 	
 	public void update() {
-		if (!targeted) {
+		if (!targeted || target.getHiddenHealth() < 0) {
 			target = acquireTarget();
+		} else if (timeSinceLastShot > firingSpeed) {
+			shoot(target);
+			timeSinceLastShot = 0;
 		}
 		
 		if (target == null || target.isAlive() == false)
 			targeted = false;
 		
 		timeSinceLastShot += Delta();
-		if (timeSinceLastShot > firingSpeed)
-			shoot();
+		
 		
 		for (Projectile p: projectiles)
 			p.update();
@@ -124,6 +125,11 @@ public abstract class Tower implements Entity {
 		this.height = height;
 	}
 
-	
-	
+	public Enemy getTarget() {
+		return target;
+	}
+
+	public int getCost() {
+		return cost;
+	}
 }

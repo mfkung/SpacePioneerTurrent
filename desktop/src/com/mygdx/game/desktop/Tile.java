@@ -6,17 +6,23 @@ import static helpers.Art.*;
 
 public class Tile {
 
-	private float x, y, width, height;
+	private float x, y;
+	private int width, height;
 	private Texture texture;
 	private TileType type;
+	private boolean occupied;
 	
-	public Tile(float x, float y, float width, float height, TileType type) {
+	public Tile(float x, float y, int width, int height, TileType type) {
 		this.x = x;
 		this.y = y;
 		this.width = width;
 		this.height = height;
 		this.type = type;
 		this.texture = QuickLoad(type.textureName);
+		if (type.buildable)
+			occupied = false;
+		else
+			occupied = true;
 	}
 	
 	public void Draw() {
@@ -47,19 +53,19 @@ public class Tile {
 		this.y = y;
 	}
 
-	public float getWidth() {
+	public int getWidth() {
 		return width;
 	}
 
-	public void setWidth(float width) {
+	public void setWidth(int width) {
 		this.width = width;
 	}
 
-	public float getHeight() {
+	public int getHeight() {
 		return height;
 	}
 
-	public void setHeight(float height) {
+	public void setHeight(int height) {
 		this.height = height;
 	}
 
@@ -79,8 +85,13 @@ public class Tile {
 		this.type = type;
 	}
 	
+	public boolean getOccupied() {
+		return occupied;
+	}
 	
-	
+	public void setOccupied(boolean occupied) {
+		this.occupied = occupied;
+	}
 }
 
 

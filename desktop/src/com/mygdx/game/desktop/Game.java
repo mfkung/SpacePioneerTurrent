@@ -21,20 +21,16 @@ public class Game {
 	private WaveManager waveManager3;
 	private WaveManager waveManager2;
 	private UI PickerUI;
+	private Enemy[] enemyTypes;
 	public static final int TILE_SIZE = 64;
 
 	public Game(int[][] map) {
 		grid = new TileGrid(map);
-		waveManager = new WaveManager(new Enemy(QuickLoad("spaceship"), grid.GetTile(19, 4), grid, 64, 64, 70, 30),
-				10, 10);
-	/*	waveManager2 = new WaveManager(new Enemy(QuickLoad("spaceship"), grid.GetTile(19, 5), grid, 64, 64, 70, 25),
-				12, 2);
-		waveManager3 = new WaveManager(new Enemy(QuickLoad("spaceship"), grid.GetTile(19, 7), grid, 64, 64, 70, 25),
-				6, 2);
-		waveManager4 = new WaveManager(new Enemy(QuickLoad("spaceship"), grid.GetTile(19, 9), grid, 64, 64, 70, 25),
-				15, 2);
-		waveManager5 = new WaveManager(new Enemy(QuickLoad("ss"), grid.GetTile(19, 11), grid, 64, 64, 70, 25),
-				20, 2);  */
+		Enemy[] enemyTypes = new Enemy[2];
+		enemyTypes[0] = new EnemySpaceShip(19, 4, grid);
+		enemyTypes[1] = new Asteroids(19, 6, grid);
+		waveManager = new WaveManager(enemyTypes, 3, 3);
+		
 		player = new Player(grid, waveManager);
 		player.setup();
 		setupUI();
@@ -55,8 +51,8 @@ public class Game {
 	
 	private void updateUI() {
 		PickerUI.draw();
-		//PickerUI.drawString(960, 792, "Lives: " + Player.Lives);
-		PickerUI.drawString(1125, 740, "Metal Scrap: " + Player.Scrap);
+		PickerUI.drawString(960, 740, "Lives: " + Player.Lives);
+		PickerUI.drawString(1120, 740, "Metal Scrap: " + Player.Scrap);
 		PickerUI.drawString(0, 0, StateManager.framesInLastSecond + " fps");
 		
 		if (Mouse.next()) {

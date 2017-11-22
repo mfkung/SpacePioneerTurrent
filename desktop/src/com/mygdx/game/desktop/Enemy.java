@@ -276,8 +276,8 @@ public class Enemy implements Entity {
 		return texture;
 	}
 
-	public void setTexture(Texture texture) {
-		this.texture = texture;
+	public void setTexture(String textureName) {
+		this.texture = QuickLoad(textureName);
 	}
 
 	public Tile getStartTile() {

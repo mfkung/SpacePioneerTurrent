@@ -1,5 +1,6 @@
 package com.mygdx.game.desktop;
 
+import java.util.Random;
 import java.util.concurrent.CopyOnWriteArrayList;
 
 import static helpers.Clock.*;
@@ -48,9 +49,12 @@ public class Wave {
 	}
 
 	private void spawn() {
-		enemyList.add(new Enemy(enemyTypes[0].getTexture(), enemyTypes[0]
-				.getStartTile(), enemyTypes[0].getTileGrid(), 64, 64, enemyTypes[0]
-				.getSpeed(), enemyTypes[0].getHealth()));
+		int enemyChosen = 1;
+		Random random = new Random();
+		enemyChosen = random.nextInt(enemyTypes.length);
+		enemyList.add(new Enemy(enemyTypes[enemyChosen].getTexture(), enemyTypes[enemyChosen]
+				.getStartTile(), enemyTypes[enemyChosen].getTileGrid(), 64, 64, enemyTypes[enemyChosen]
+				.getSpeed(), enemyTypes[enemyChosen].getHealth()));
 		enemiesSpawned++;
 	}
 	

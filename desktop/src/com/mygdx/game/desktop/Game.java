@@ -16,21 +16,19 @@ public class Game {
 	private Player player;
 	private float time;
 	private WaveManager waveManager;
-	private WaveManager waveManager5;
-	private WaveManager waveManager4;
-	private WaveManager waveManager3;
-	private WaveManager waveManager2;
+
 	private UI PickerUI;
 	private Enemy[] enemyTypes;
 	public static final int TILE_SIZE = 64;
 
 	public Game(int[][] map) {
 		grid = new TileGrid(map);
-		Enemy[] enemyTypes = new Enemy[2];
+		Enemy[] enemyTypes = new Enemy[3];
 		enemyTypes[0] = new EnemySpaceShip(19, 4, grid);
 		enemyTypes[1] = new Asteroids(19, 6, grid);
-		waveManager = new WaveManager(enemyTypes, 3, 3);
-		
+		enemyTypes[2] = new EnemySpaceShip2(19, 8, grid);
+		waveManager = new WaveManager(enemyTypes, 1, 10);
+
 		player = new Player(grid, waveManager);
 		player.setup();
 		setupUI();
@@ -43,17 +41,16 @@ public class Game {
 		PickerUI.createMenu("TurrentPicker", 24, 792, 10, 2);
 		PickerUI.getMenu("TurrentPicker").addButton(new Button("TurrentBlack", QuickLoad("rocket3"), 0, 0));
 		PickerUI.getMenu("TurrentPicker").addButton(new Button("TurrentSlow", QuickLoad("rocket4"), 0, 0));
-		//PickerUI.getMenu("TurrentPicker").addButton(new Button("TurrentSlow", QuickLoad("rocket4"), 0, 0));
-		//PickerUI.getMenu("TurrentPicker").addButton(new Button("TurrentSlow", QuickLoad("rocket4"), 0, 0));
-		//PickerUI.getMenu("TurrentPicker").addButton(new Button("TurrentSlow", QuickLoad("rocket4"), 0, 0));
+
 		
 	}
 	
 	private void updateUI() {
 		PickerUI.draw();
-		PickerUI.drawString(960, 740, "Lives: " + Player.Lives);
-		PickerUI.drawString(1120, 740, "Metal Scrap: " + Player.Scrap);
+		PickerUI.drawString(940, 740, "Lives: " + Player.Lives);
+		PickerUI.drawString(1100, 740, "Metal Scrap: " + Player.Scrap);
 		PickerUI.drawString(0, 0, StateManager.framesInLastSecond + " fps");
+		PickerUI.drawString(750, 740, "Wave:" + waveManager.getWaveNumber());
 		
 		if (Mouse.next()) {
 			boolean mouseClicked = Mouse.isButtonDown(0);
@@ -67,20 +64,9 @@ public class Game {
 	}
 	
 	public void update() {
-		//DrawQuadTex(QuickLoad("menuPicker"), 0 , 768, 1280,256 );
 		time += Delta();
 		grid.Draw();
-		//black.draw();
-	//	if (time > 4)
-			waveManager.update();
-	/*	if (time > 6)
-			waveManager5.update();
-		if (time > 10)
-			waveManager4.update();
-		if (time > 17)
-			waveManager3.update();
-		if (time > 20)
-			waveManager2.update(); */
+		waveManager.update();
 		player.update();
 		PickerUI.draw();
 		updateUI();

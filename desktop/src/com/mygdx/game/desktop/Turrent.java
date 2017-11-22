@@ -39,7 +39,7 @@ public class Turrent {
 	
 	public Enemy acquireTarget() {
 		Enemy closest = null;
-		float closestDistance = 2000;
+		float closestDistance = 10000;
 		for (Enemy e: enemies) {
 			if (isInRange(e) && findDistance(e) < closestDistance) {
 				closestDistance = findDistance(e);
@@ -72,16 +72,18 @@ public class Turrent {
 		enemies = newList;
 	}
 	public void update() {
-		if (!targeted) {
+		if (!targeted || target.getHiddenHealth() < 0) {
 			target = acquireTarget();
+		} else if (timeSinceLastShot > firingSpeed) {
+			shoot();
+			timeSinceLastShot = 0;
 		}
 		
 		if (target == null || target.isAlive() == false)
 			targeted = false;
 		
 		timeSinceLastShot += Delta();
-		if (timeSinceLastShot > firingSpeed)
-			shoot();
+		
 		
 		for (Projectile p: projectiles)
 			p.update();

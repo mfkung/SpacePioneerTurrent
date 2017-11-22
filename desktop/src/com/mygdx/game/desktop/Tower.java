@@ -36,7 +36,7 @@ public abstract class Tower implements Entity {
 	
 	private Enemy acquireTarget() {
 		Enemy closest = null;
-		float closestDistance = 2000;
+		float closestDistance = 10000;
 		for (Enemy e: enemies) {
 			if (isInRange(e) && findDistance(e) < closestDistance && e.getHiddenHealth() > 0) {
 				closestDistance = findDistance(e);

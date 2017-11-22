@@ -1,10 +1,12 @@
 package com.mygdx.game.desktop;
-import static helpers.Art.QuickLoad;
+
 public class EnemySpaceShip extends Enemy {
 
 	public EnemySpaceShip(int tileX, int tileY, TileGrid grid) {
 		super(tileX, tileY, grid);
-		this.setTexture(QuickLoad("spaceship"));
+		this.setTexture("spaceship");
+		this.setHealth(60);
+		this.setSpeed(60);
 	}
 
 }

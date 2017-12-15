@@ -2,9 +2,9 @@ package com.mygdx.game.desktop;
 
 import java.util.concurrent.CopyOnWriteArrayList;
 
-public class TurrentBlack extends Tower{
+public class TurretBlack extends Tower{
 	
-	public TurrentBlack(TowerType type, Tile startTile, CopyOnWriteArrayList<Enemy> enemies) {
+	public TurretBlack(TowerType type, Tile startTile, CopyOnWriteArrayList<Enemy> enemies) {
 		super(type, startTile, enemies);
 	}
 	

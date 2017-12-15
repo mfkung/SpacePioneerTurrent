@@ -56,9 +56,9 @@ public class Game {
 			boolean mouseClicked = Mouse.isButtonDown(0);
 			if (mouseClicked) {
 				if(PickerUI.getMenu("TurrentPicker").isButtonClicked("TurrentBlack"))
-					player.pickTurrent(new TurrentBlack(TowerType.TurrentBlack, grid.GetTile(0, 0), waveManager.getCurrentWave().getEnemyList()));
+					player.pickTurrent(new TurretBlack(TowerType.TurrentBlack, grid.GetTile(0, 0), waveManager.getCurrentWave().getEnemyList()));
 				else if(PickerUI.getMenu("TurrentPicker").isButtonClicked("TurrentSlow"))
-					player.pickTurrent(new TurrentSlow(TowerType.TurrentSlow, grid.GetTile(0, 0), waveManager.getCurrentWave().getEnemyList()));
+					player.pickTurrent(new TurretSlow(TowerType.TurrentSlow, grid.GetTile(0, 0), waveManager.getCurrentWave().getEnemyList()));
 			}
 		}
 	}

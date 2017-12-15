@@ -9,9 +9,6 @@ import java.util.concurrent.CopyOnWriteArrayList;
 
 import static helpers.Art.*;
 
-
-import com.mygdx.game.desktop.Turrent.*;
-
 public abstract class Projectile implements Entity {
 
 	private Texture texture;

@@ -102,7 +102,7 @@ public abstract class Projectile implements Entity {
 	}
 
 	public void draw() {
-		DrawQuadTex(texture, x, y, 21, 6);
+		DrawQuadTex(texture, x, y, 11, 11);
 	}
 
 	public float getX() {

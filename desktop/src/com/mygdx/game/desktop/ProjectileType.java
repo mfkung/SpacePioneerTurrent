@@ -6,7 +6,7 @@ import org.newdawn.slick.opengl.Texture;
 
 public enum ProjectileType {
 	
-	Normal(QuickLoad("laser"), 12 , 700),
+	Normal(QuickLoad("laserball"), 12 , 700),
 	Slow(QuickLoad("laserSlow"), 4 , 700);
 	
 	Texture texture;

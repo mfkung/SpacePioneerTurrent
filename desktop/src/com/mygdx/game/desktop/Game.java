@@ -25,7 +25,7 @@ public class Game {
 		grid = new TileGrid(map);
 		Enemy[] enemyTypes = new Enemy[3];
 		enemyTypes[0] = new EnemySpaceShip(19, 4, grid);
-		enemyTypes[1] = new Asteroids(19, 6, grid);
+		enemyTypes[1] = new Asteroids(0, 6, grid);
 		enemyTypes[2] = new EnemySpaceShip2(19, 8, grid);
 		waveManager = new WaveManager(enemyTypes, 1, 10);
 

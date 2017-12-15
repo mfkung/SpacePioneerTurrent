@@ -10,7 +10,7 @@ import org.newdawn.slick.opengl.Texture;
 
 public class Turrent {
 	
-	private float x, y, timeSinceLastShot, firingSpeed;
+	private float x, y, timeSinceLastShot, firingSpeed , angle;
 	private int width, height, damage, range;
 	private Texture baseTexture, rocketTexture;
 	private Tile startTile;
@@ -33,6 +33,7 @@ public class Turrent {
 		this.projectiles = new ArrayList<Projectile>();
 		this.enemies = enemies;
 		this.targeted = false;
+		this.angle = 0;
 		//this.target = acquireTarget();
 
 	}
@@ -63,6 +64,11 @@ public class Turrent {
 		return xDistance;
 	}
 	
+	private float calculateAngle() {
+		double angleTemp = Math.atan2(target.getY() - y, target.getX() - x);
+		return (float) Math.toDegrees(angleTemp) - 90;
+	}
+	
 	private void shoot() {
 		timeSinceLastShot = 0;
 		//projectiles.add(new ProjectileSlow(QuickLoad("laserSlow"), target, x + Game.TILE_SIZE / 2 , y + Game.TILE_SIZE / 2 , 21, 6, 900, 10));
@@ -87,7 +93,7 @@ public class Turrent {
 		
 		for (Projectile p: projectiles)
 			p.update();
-
+		angle = calculateAngle();
 		draw();
 	}
 	

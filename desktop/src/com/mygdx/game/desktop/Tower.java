@@ -1,15 +1,18 @@
 package com.mygdx.game.desktop;
 
 import org.newdawn.slick.opengl.Texture;
+
+
 import static helpers.Art.DrawQuadTex;
 import static helpers.Art.QuickLoad;
+import static helpers.Art.DrawQuadTexRot;
 import static helpers.Clock.Delta;
 
 import java.util.ArrayList;
 import java.util.concurrent.CopyOnWriteArrayList;
 public abstract class Tower implements Entity {
 
-	private float x, y, timeSinceLastShot, firingSpeed;
+	private float x, y, timeSinceLastShot, firingSpeed, angle;
 	private int width, height, range, cost;
 	public Enemy target;
 	private Texture[] textures;
@@ -32,6 +35,7 @@ public abstract class Tower implements Entity {
 		this.timeSinceLastShot = 0f;
 		this.projectiles = new ArrayList<Projectile>();
 		this.firingSpeed = type.firingSpeed;
+		this.angle = 0;
 	}
 	
 	private Enemy acquireTarget() {
@@ -61,6 +65,10 @@ public abstract class Tower implements Entity {
 
 		return xDistance;
 	}
+	private float calculateAngle() {
+		double angleTemp = Math.atan2(target.getY() - y, target.getX() - x);
+		return (float) Math.toDegrees(angleTemp);
+	}
 	
 	public abstract void shoot(Enemy target);
 	
@@ -71,9 +79,12 @@ public abstract class Tower implements Entity {
 	public void update() {
 		if (!targeted || target.getHiddenHealth() < 0) {
 			target = acquireTarget();
-		} else if (timeSinceLastShot > firingSpeed) {
-			shoot(target);
-			timeSinceLastShot = 0;
+		} else {
+			angle = calculateAngle();
+			if (timeSinceLastShot > firingSpeed) {
+				shoot(target);
+				timeSinceLastShot = 0;
+			}
 		}
 		
 		if (target == null || target.isAlive() == false)
@@ -81,16 +92,15 @@ public abstract class Tower implements Entity {
 		
 		timeSinceLastShot += Delta();
 		
-		
 		for (Projectile p: projectiles)
 			p.update();
-
+		
 		draw();
 	}
 
 	public void draw() {
 		for (int i = 0; i < textures.length; i++)
-			DrawQuadTex(textures[i], x , y, width, height);
+			DrawQuadTexRot(textures[i], x, y, width, height, angle);
 	}
 
 	public float getX() {

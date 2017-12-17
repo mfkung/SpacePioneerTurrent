@@ -44,8 +44,10 @@ public class Wave {
 			} else
 				enemyList.remove(e);
 		}
-		if (allEnemiesDead)
+		if (allEnemiesDead) {
 			waveCompleted = true;
+			enemiesPerWave++;
+		}
 	}
 
 	private void spawn() {

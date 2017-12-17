@@ -16,6 +16,7 @@ public class Game {
 	private TileGrid grid;
 	private Player player;
 	private float time;
+	private int x;
 	private WaveManager waveManager;
 
 	private UI PickerUI;
@@ -24,11 +25,13 @@ public class Game {
 
 	public Game(int[][] map) {
 		grid = new TileGrid(map);
+		x = 4;
 		Enemy[] enemyTypes = new Enemy[3];
 		enemyTypes[0] = new EnemySpaceShip(0, 5, grid);
 		enemyTypes[1] = new EnemySpaceShip3(0, 5, grid);
 		enemyTypes[2] = new EnemySpaceShip2(4, 0, grid);
-		waveManager = new WaveManager(enemyTypes, 1, 10);
+
+		waveManager = new WaveManager(enemyTypes, 1, x);
 
 		player = new Player(grid, waveManager);
 		player.setup();
@@ -68,14 +71,16 @@ public class Game {
 	public void update() {
 		time += Delta();
 		grid.Draw();
-		if (time >= 5)
+		if (time >= 5) {
 			waveManager.update();
+			//x++;
+		}
 		player.update();
 		PickerUI.draw();
 		updateUI();
 		if (Player.Lives == 0)
 			gameOver();
-		if (waveManager.getWaveNumber() == 10)
+		if (waveManager.getWaveNumber() == 15)
 			clear();
 	}
 

@@ -40,7 +40,7 @@ public abstract class Tower implements Entity {
 	
 	private Enemy acquireTarget() {
 		Enemy closest = null;
-		float closestDistance = 10000;
+		float closestDistance = 300;
 		for (Enemy e: enemies) {
 			if (isInRange(e) && findDistance(e) < closestDistance && e.getHiddenHealth() > 0) {
 				closestDistance = findDistance(e);
@@ -77,7 +77,7 @@ public abstract class Tower implements Entity {
 	}
 	
 	public void update() {
-		if (!targeted || target.getHiddenHealth() < 0) {
+		if (!targeted || target.getHiddenHealth() < 0 ) {
 			target = acquireTarget();
 		} else {
 			angle = calculateAngle();

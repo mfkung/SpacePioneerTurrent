@@ -3,7 +3,7 @@ public class EnemySpaceShip extends Enemy {
 	public EnemySpaceShip(int tileX, int tileY, TileGrid grid) {
 		super(tileX, tileY, grid);
 		this.setTexture("Giant3");
-		this.setHealth(60);
+		this.setHealth(80);
 		this.setSpeed(80);
 		}
 	}

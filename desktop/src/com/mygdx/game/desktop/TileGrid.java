@@ -6,14 +6,7 @@ public class TileGrid {
 	public Tile[][] map;
 	private int tilesWide, tilesHigh;
 	
-	public TileGrid() {
-		map = new Tile[20][12];
-		for (int i = 0; i < map.length; i++) {
-			for (int j = 0; j < map[i].length; j++) {
-				map[i][j] = new Tile(i * 64, j * 64, 64, 64, TileType.createablefield);
-			}
-		}
-	}
+
 	
 	public TileGrid(int[][] newMap) {
 		this.tilesWide = newMap[0].length;
@@ -23,14 +16,36 @@ public class TileGrid {
 			for (int j = 0; j < map[i].length; j++) {
 				switch (newMap[j][i]) {
 				case 0:
-					map[i][j] = new Tile(i * 64, j * 64, 64, 64, TileType.createablefield);
+					map[i][j] = new Tile(i * 64, j * 64, 64, 64, TileType.reachedend);
 					break;
 				case 1:
 					map[i][j] = new Tile(i * 64, j * 64, 64, 64, TileType.enemyfield);
 					break;
 				case 2:
-					map[i][j] = new Tile(i * 64, j * 64, 64, 64, TileType.starfield);
+					map[i][j] = new Tile(i * 64, j * 64, 64, 64, TileType.platformH);
 					break;
+				case 3:
+					map[i][j] = new Tile(i * 64, j * 64, 64, 64, TileType.platformV);
+					break;
+				case 4:
+					map[i][j] = new Tile(i * 64, j * 64, 64, 64, TileType.platformHB);
+					break;
+				case 5:
+					map[i][j] = new Tile(i * 64, j * 64, 64, 64, TileType.platform1);
+					break;
+				case 6:
+					map[i][j] = new Tile(i * 64, j * 64, 64, 64, TileType.platform2);
+					break;
+				case 7:
+					map[i][j] = new Tile(i * 64, j * 64, 64, 64, TileType.platform3);
+					break;
+				case 8:
+					map[i][j] = new Tile(i * 64, j * 64, 64, 64, TileType.platform4);
+					break;
+				case 9:
+					map[i][j] = new Tile(i * 64, j * 64, 64, 64, TileType.platform5);
+					break;
+					
 				}
 			}
 		}

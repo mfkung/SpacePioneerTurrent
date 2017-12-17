@@ -9,6 +9,7 @@ import org.lwjgl.input.Mouse;
 import UserInterface.Button;
 import UserInterface.UI;
 import helpers.StateManager;
+import helpers.StateManager.GameState;
 
 public class Game {
 	
@@ -24,9 +25,9 @@ public class Game {
 	public Game(int[][] map) {
 		grid = new TileGrid(map);
 		Enemy[] enemyTypes = new Enemy[3];
-		enemyTypes[0] = new EnemySpaceShip(19, 4, grid);
-		enemyTypes[1] = new Asteroids(0, 6, grid);
-		enemyTypes[2] = new EnemySpaceShip2(19, 8, grid);
+		enemyTypes[0] = new EnemySpaceShip(0, 5, grid);
+		enemyTypes[1] = new EnemySpaceShip3(0, 5, grid);
+		enemyTypes[2] = new EnemySpaceShip2(4, 0, grid);
 		waveManager = new WaveManager(enemyTypes, 1, 10);
 
 		player = new Player(grid, waveManager);
@@ -38,7 +39,8 @@ public class Game {
 		PickerUI = new UI();
 		//PickerUI.addButton("TurrentBlack", "rocket3", 0, 0);
 		//PickerUI.addButton("TurrentSlow", "rocket4", 64, 0);
-		PickerUI.createMenu("TurrentPicker", 24, 792, 10, 2);
+		PickerUI.createMenu(""
+				+ "TurrentPicker", 24, 792, 10, 2);
 		PickerUI.getMenu("TurrentPicker").addButton(new Button("TurrentBlack", QuickLoad("rocket3"), 0, 0));
 		PickerUI.getMenu("TurrentPicker").addButton(new Button("TurrentSlow", QuickLoad("rocket4"), 0, 0));
 
@@ -66,9 +68,26 @@ public class Game {
 	public void update() {
 		time += Delta();
 		grid.Draw();
-		waveManager.update();
+		if (time >= 5)
+			waveManager.update();
 		player.update();
 		PickerUI.draw();
 		updateUI();
+		if (Player.Lives == 0)
+			gameOver();
+		if (waveManager.getWaveNumber() == 10)
+			clear();
+	}
+
+	private void clear() {
+		System.out.println("Game Clear");
+		StateManager.setState(GameState.GAMECLEAR);
+		
+	}
+
+	private void gameOver() {
+		System.out.println("Game Over");
+		StateManager.setState(GameState.GAMEOVER);
+
 	}
 }

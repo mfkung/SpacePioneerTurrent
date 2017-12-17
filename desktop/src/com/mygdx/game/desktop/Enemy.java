@@ -4,7 +4,7 @@ import org.newdawn.slick.opengl.Texture;
 
 import com.mygdx.game.desktop.Checkpoint;
 import com.mygdx.game.desktop.Tile;
-
+import com.mygdx.game.desktop.WaveManager;
 import static helpers.Art.*;
 import static helpers.Clock.*;
 
@@ -12,10 +12,10 @@ import java.util.ArrayList;
 
 public class Enemy implements Entity {
 	private int width, height, currentCheckpoint;
-	private float speed, x, y, health, startHealth, hiddenHealth;
+	private float speed, x, y, health, startHealth, hiddenHealth, angle;
 	private Texture texture, healthBG, healthFG, healthBD;
 	private Tile startTile;
-	private Tower target;
+
 	private boolean first = true, alive = true;
 	private TileGrid grid;
 	
@@ -36,6 +36,7 @@ public class Enemy implements Entity {
 		this.health = 15;
 		this.startHealth = health;
 		this.hiddenHealth = health;
+		//this.angle = angle;
 		this.grid = grid;
 		this.first = true;
 		this.alive = true;
@@ -97,6 +98,8 @@ public class Enemy implements Entity {
 				y += Delta() * checkpoints.get(currentCheckpoint).getyDirection() * speed;
 			}
 		}
+		
+
 	}
 	
 	private void endReached() {
@@ -108,12 +111,9 @@ public class Enemy implements Entity {
 		boolean reached = false;
 		Tile t = checkpoints.get(currentCheckpoint).getTile();
 		//Check if position reached tile within variance of 3 (arbitrary)
-		if (x > t.getX() - 3 && 
-				x < t.getX() + 3 &&
-				y > t.getY() - 3 &&
-				y < t.getY() + 3) {
-			
+		if (x > t.getX() - 3 && x < t.getX() + 3 && y > t.getY() - 3 && y < t.getY() + 3) {
 			reached = true;
+			angle = -90;
 			x = t.getX();
 			y = t.getY();
 		}
@@ -210,7 +210,7 @@ public class Enemy implements Entity {
 
 	public void draw() {
 		float healthPercentage = health / startHealth;
-		DrawQuadTex(texture, x, y, width, height);
+		DrawQuadTexRot(texture, x, y, width, height,angle);
 		DrawQuadTex(healthBG, x ,y - 16, width, 8);
 		DrawQuadTex(healthFG, x ,y - 16, 64 * healthPercentage, 8);
 		DrawQuadTex(healthBD, x ,y - 16, width, 8);

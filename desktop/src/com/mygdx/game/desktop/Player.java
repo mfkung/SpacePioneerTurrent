@@ -23,10 +23,10 @@ public class Player {
 	
 	public Player(TileGrid grid, WaveManager waveManager) {
 		this.grid = grid;
-		this.types = new TileType[3];
-		this.types[0] = TileType.createablefield;
+		this.types = new TileType[10];
+		this.types[0] = TileType.reachedend;
 		this.types[1] = TileType.enemyfield;
-		this.types[2] = TileType.starfield;
+		this.types[2] = TileType.platform1;
 		this.waveManager = waveManager;
 		this.towerList = new ArrayList<Tower>();
 		this.leftMouseButtonDown = false;
@@ -37,7 +37,7 @@ public class Player {
 	}
 	
 	public void setup() {
-		Scrap = 50;
+		Scrap = 70;
 		Lives = 10;
 	}
 	
